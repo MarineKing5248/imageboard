@@ -4,7 +4,13 @@
     <title></title>
 </head>
 <body>
+    <div id="main">
+        <h1 v-bind:class="headingClassName" :style="'color:' + blue">{{"heading"}}</h1>
+        <input type="text" v-model="greetee">
+    </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/sript.js"></script>
 </body>
 </html>
