@@ -1,26 +1,23 @@
-console.log("yo, man!");
-
 (function() {
     var app = new Vue({
         el: "#main",
         data: {
-            heading: "图样图森破",
-            color: "tomato",
-            headingClassName: "heading"
+            heading: "Illusion",
+            class: "photo",
+            images: []
         },
-        created: function() {
-            console.log("created!");
-        },
+        // created: function() {
+        //     console.log("created!");
+        // },
         mounted: function() {
-            axios.get("/cities").then(function(res) {
-                app.cities = res.data.cities;
+            axios.get("/images").then(function(res) {
+                app.images = res.data.rows;
             });
         },
         method: {
             handleClick: function(name) {
                 this.changeGreetee = name;
-            },
-            changeGreetee: function() {}
+            }
         }
     });
     // setTimeout(function() {

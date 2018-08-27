@@ -1,0 +1,43 @@
+* {
+  background: rgb(131, 171, 213);
+}
+
+h1 {
+  left: 300px;
+}
+
+.photo {
+  border: solid 3px rgb(131, 171, 213);
+  height: 300px;
+  width: 300px;
+  margin: 10px;
+  display: inline-flex;
+  font-size: 40px;
+  font-family: monospace;
+  color: blue;
+}
+.photo:hover {
+  border-color: yellow;
+}
+
+img {
+  height: 300px;
+  width: 300px;
+}
+
+p {
+  z-index: 100;
+}
+
+/* .spinne {
+  height: 100px;
+  width: 100%;
+  background-color: rgb(130, 160, 180);
+  z-index: 200;
+  visibility: hidden;
+}
+.spinne img {
+  height: 100px;
+  position: absolute;
+  left: 44%;
+} */

@@ -1,16 +1,21 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>Illusion</title>
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
     <div id="main">
-        <h1 v-bind:class="headingClassName" :style="'color:' + blue">{{"heading"}}</h1>
-        <input type="text" v-model="greetee">
+        <h1>{{heading}}</h1>
+            <ul v-if="images.length > 0">
+                <li class="photo" v-for="image in images">
+                    <img :src="image.url"> <p>{{images.title}}</p>
+               </li>
+            </ul>
     </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/js/sript.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
