@@ -14,3 +14,14 @@ module.exports.getImages = function() {
                  ORDER BY created_at DESC`;
     return db.query(query);
 };
+
+module.exports.saveFile = function(url, title, description, username) {
+    var query = `INSERT INTO images (url, title, description, username)
+    VALUES ($1, $2, $3, $4)`;
+    return db.query(query, [
+        url || null,
+        title || null,
+        description || null,
+        username || null
+    ]);
+};
