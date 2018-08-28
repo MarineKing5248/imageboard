@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const ca = require("chalk-animation");
-const db = require("./sql/db.js");
+const db = require("./db.js");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
@@ -11,13 +11,13 @@ app.use(
     })
 ); // used in POST reqs
 const s3 = require("./s3");
-const config = require("./config.json");
+const config = require("./config");
 app.use(express.static("./public"));
 
 app.get("/images", (req, res) => {
     db.getImages()
-        .then(response => {
-            res.json(response);
+        .then(result => {
+            res.json(result.rows);
         })
         .catch(err => console.log(err));
 });
@@ -41,14 +41,15 @@ const uploader = multer({
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
+    console.log("POST upload!", req.body);
     // If nothing went wrong the file is already in the uploads directory
     db.saveFile(
-        config.s3url + req.file.filename,
+        config.s3Url + req.file.filename,
         req.body.title,
         req.body.desc,
         req.body.username
     )
-        .then(rows => {
+        .then(({ rows }) => {
             res.json({
                 image: rows[0]
             });
