@@ -1,10 +1,34 @@
 (function() {
+    //component for pop up photo to show bigger photo
+    Vue.component("big-photo", {
+        data: function() {
+            return {
+                info: []
+            };
+        },
+        props: ["id"],
+        template: "#tmpl1",
+        //mount here to get data from the database for the component
+        mounted: function() {
+            var app = this; //scope thing, this ???
+            axios.get("/big-photo/" + this.id).then(function(res) {
+                app.info = res.data[0];
+                console.log(this.info);
+            });
+        },
+        methods: {
+            close: function() {
+                this.$emit("close");
+            }
+        }
+    });
     var app = new Vue({
         el: "#main",
         data: {
             heading: "Illusion",
             class: "photo",
             images: [],
+            currentId: null,
             form: {
                 title: "",
                 username: "",
@@ -28,7 +52,14 @@
                 axios.post("/upload", formData).then(function(res) {
                     app.images.unshift(res.data.image);
                 });
-            } //close upload file
+            }, //close upload file
+            getCurrentId: function(img_id) {
+                this.currentId = img_id;
+                console.log("click", id);
+            },
+            close: function() {
+                this.currentId = null;
+            }
         } //close:methods
     }); //close Vue instance
 })(); //close iife

@@ -14,15 +14,32 @@
             <input type='file' accept='image/*'>
             <button v-on:click ='uploadFile' class='upload'>Upload</button>
         </form>
-            <ul v-if="images.length > 0">
-                <li class="photo" v-for="image in images">
-                    <a v-bind:href="image.url" target="_blank">
-                    <img :src="image.url"></a>
-                    <p class="">{{image.title}}</p>
-               </li>
-            </ul>
+        <div v-if="images.length > 0" class="ul">
+            <div v-on:click="getCurrentId(image.id)" v-for="image in images">
+                <img :src="image.url"  class="images">
+                <p class="">{{image.title}}</p>
+             </div>
+        </div>
+            <!-- /*somecomponent using the scripit with id "tmpl" below, and using dynamic component u need bind it as usual. and component only want */ -->
+        <big-photo v-if='currentId' :id='currentId' v-on:close='close'></big-photo>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script id="tmpl1" type="text/template">
+
+        <div id="popUp">
+            <img :src="info.url">
+            <p>{{image.title}}</p>
+            <p>{{image.description}}</p>
+            <p>{{image.username}} has uploaded this at {{image.created_at}}</p>
+            <button v-on:click="close">X</button>
+        </div>
+
+    </script>
+    <!-- <script id="tmpl2" type="text/template">
+        <div style="margin-left:30px" @click="click">
+            <h1><em>XXXXXXXX</em></h1>
+        </div>
+    </script> -->
+     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>

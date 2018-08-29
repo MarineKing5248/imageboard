@@ -21,6 +21,15 @@ app.get("/images", (req, res) => {
         })
         .catch(err => console.log(err));
 });
+// get big Image data after click on the small photo icon
+app.get("/big-photo/:id", (req, res) => {
+    db.getCurrentImage(req.params.id)
+        .then(result => {
+            console.log("hello", result.rows);
+            res.json(result.rows);
+        })
+        .catch(err => console.log(err));
+});
 
 const diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -41,7 +50,7 @@ const uploader = multer({
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
-    console.log("POST upload!", req.body);
+    // console.log("POST upload!", req.body);
     // If nothing went wrong the file is already in the uploads directory
     db.saveFile(
         config.s3Url + req.file.filename,

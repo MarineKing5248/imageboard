@@ -1,21 +1,19 @@
 * {
-  background: rgb(131, 171, 213);
+  background: rgba(42, 100, 142);
 }
 
 h1 {
   left: 300px;
 }
-
+.ul {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
 .photo {
   border: solid 3px rgb(131, 171, 213);
-  height: 320px;
+  height: 300px;
   width: 300px;
   margin: 10px;
-  display: inline-flex;
-  font-size: 20px;
-  font-family: monospace;
-  color: blue;
-  text-align: center;
 }
 .photo:hover {
   border-color: yellow;
@@ -27,10 +25,37 @@ img {
 }
 
 p {
-  display: flex;
-  z-index: 100;
+  font-family: monospace;
+  font-size: 20px;
 }
 
+#popUp {
+  position: fixed;
+  height: 500px;
+  width: 500px;
+  top: 0px;
+
+  left: 0px;
+}
+#popUp img {
+  z-index: 10;
+  height: 300px;
+  width: 300px;
+}
+
+/* #modal {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  left: 40px;
+  bottom: 40px;
+  background-color: rgba(211, 211, 211);
+} */
+
+/* .photoBig {
+  height: 300px;
+  width: 400px;
+} */
 /* .spinne {
   height: 100px;
   width: 100%;
