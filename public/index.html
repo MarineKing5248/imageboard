@@ -11,6 +11,7 @@
             <input v-model='form.title' type='text' name='title' placeholder='title'>
             <input v-model='form.description' type='text' name='description' placeholder='description'>
             <input v-model='form.username' type='text' name='username' placeholder='username'>
+            <input v-model='form.tag' type='text' name='tag' placeholder='tag'>
             <input type='file' accept='image/*'>
             <button v-on:click ='uploadFile' class='upload'>Upload</button>
         </form>
@@ -21,17 +22,31 @@
              </div>
         </div>
             <!-- /*somecomponent using the scripit with id "tmpl" below, and using dynamic component u need bind it as usual. and component only want */ -->
-        <big-photo v-if='currentId' :id='currentId' v-on:close='close'></big-photo>
+        <big-photo v-if='show' :id='currentId' v-on:close='close'></big-photo>
     </div>
     <script id="tmpl1" type="text/template">
-
+    <div id="imagePopUp">
         <div id="popUp">
-            <img :src="info.url">
-            <p>{{image.title}}</p>
-            <p>{{image.description}}</p>
-            <p>{{image.username}} has uploaded this at {{image.created_at}}</p>
-            <button v-on:click="close">X</button>
+            <img v-bind:src="info.url" @click="close">
+            <p>{{info.title}}</p>
+            <p>{{info.description}}</p>
+            <p>{{info.username}} has uploaded this at {{info.created_at}}</p>
+            <form>
+                <input v-model = "form.comment" type = "text" name = "comment" placeholder = "comment">
+                <input v-model = "form.username" type = "text" name = "username" placeholder = "username">
+                <button v-on:click="addComments"> Submit </button>
+            </form>
+            <div class="commentBox">
+                    <div v-if="comments.length > 0" v-for="comm in comments" >
+                        <p>{{comm.comment}}</p>
+                        <p>{{comm.username}}</p>
+                        <p>Tag: {{comm.tag}}</p>
+                    </div>
+            </div>
         </div>
+
+        <button v-on:click="close">X</button>
+    </div>
 
     </script>
     <!-- <script id="tmpl2" type="text/template">
