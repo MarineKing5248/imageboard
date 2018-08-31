@@ -3,7 +3,7 @@
     Vue.component("big-photo", {
         data: function() {
             return {
-                image: [],
+                image: {},
                 comments: [],
                 form: {
                     comment: "",
@@ -12,7 +12,7 @@
             };
         },
         props: ["id"],
-        template: "#tmpl1",
+        template: "#template1",
         watch: {
             id: function() {
                 this.getImageforModal();
@@ -27,26 +27,24 @@
             });
         },
         methods: {
-            close: function() {
+            emitClose: function() {
                 this.$emit("close");
             },
             getImageforModal: function() {
-                var component = this;
+                var app = this;
                 axios.get("/getImage/" + this.id).then(function(res) {
-                    component.image = res.data.image[0];
+                    app.image = res.data.image[0];
+                    if (!app.image) {
+                        console.log("in component image doesnot exist");
+                        app.currentImageId = null;
+                        location.hash = "";
+                    }
                 });
             }, //get image end
-            addComments: function(event) {
-                event.preventDefault();
-                var app = this;
-                var commentInfo = {
-                    user_id: this.id,
-                    comment: this.form.comment,
-                    username: this.form.username
-                };
-                axios.post("/getImage/" + this.id, commentInfo).then(res => {
-                    console.log("resp in POST /upload: ", res.data[0]);
-                    app.comments.unshift(res.data[0]);
+            submitComment: function() {
+                var component = this;
+                axios.post("/submitComment/" + this.id, this.form).then(function(resp) {
+                    component.comments.unshift(resp.data.comment[0]);
                 });
             }
         }
@@ -54,25 +52,20 @@
     var app = new Vue({
         el: "#main",
         data: {
-            heading: "Illusion",
-            class: "photo",
             images: [],
             lastImageId: null,
             hasMore: true,
-            currentId: "",
-            show: "",
+            currentImageId: location.hash.length > 1 && location.hash.slice(1),
             form: {
                 title: "",
                 username: "",
-                description: "",
-                tag: ""
+                description: ""
             }
         },
         mounted: function() {
-            axios.get("/images").then(function(res) {
-                app.images = res.data;
+            axios.get("/getImages").then(function(res) {
+                app.images = res.data.images;
                 app.lastImageId = app.images[app.images.length - 1].id;
-                // console.log("image id", app.lastImageId);
             });
         }, //client side 'get' and 'render',user cant see anything changed,the url stay the same, it runs when the page loads or refreshes
         methods: {
@@ -99,6 +92,12 @@
                     app.hasMore = !!res.data.moreimages.length;
                     app.images = app.images.concat(res.data.moreimages);
                 });
+            },
+            getImageId: function(id) {
+                this.currentImageId = id;
+            }, //close getImageDetails
+            changeFile: function(e) {
+                this.file = e.target.files[0];
             }
         } //close:methods
     }); //close Vue instance

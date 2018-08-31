@@ -6,52 +6,71 @@
 </head>
 <body>
     <div id="main">
-        <big-photo v-if='show' :id='currentId' v-on:close='close'></big-photo>
-        <h1>{{heading}}</h1>
-        <form>
-            <input v-model='form.title' type='text' name='title' placeholder='title'>
-            <input v-model='form.description' type='text' name='description' placeholder='description'>
-            <input v-model='form.username' type='text' name='username' placeholder='username'>
-            <input v-model='form.tag' type='text' name='tag' placeholder='tag'>
-            <input type='file' accept='image/*'>
-            <button v-on:click ='uploadFile' class='upload'>Upload</button>
-        </form>
-        <div v-if="images.length > 0" class="ul">
-            <div v-for="image in images">
-                <a class="imagelink" :href="'#' + image.id">
-                <img v-bind:src='image.url' alt="image"/>
-                </a>
-                <p class="imgtxt">{{image.title}}</p>
-             </div>
-        </div>
-        <input v-if="hasMore" v-on:click="getMoreImages" type="button" id="loadmore" value="Load More Results">
-            <!-- /*somecomponent using the scripit with id "tmpl" below, and using dynamic component u need bind it as usual. and component only want */ -->
+        <header class="imageboardheader">
+            <h1 class="headerh1">Only Illusions</h1>
+            <p class="headtxt">Illusions in life, or life in Illusion</p>
+        </header>
 
+        <big-photo v-if='currentImageId' :id='currentImageId' v-on:close='hideModal'></big-photo>
+
+        <div class="uploadform">
+            <h1>Add an Image:</h2>
+            <!--we dont have to use a form tag-->
+            <div class="form">
+                <label for="title">Title :</label>
+                <input v-model='form.title' type="text" name="title" placeholder="image title" required/>
+                <label for="description">Description :</label>
+                <input v-model='form.description' type="text" name="description" placeholder="image description" required/>
+                <label for="username">User Name :</label>
+                <input v-model='form.username' type="text" name="username" placeholder="user name" required/>
+                <div class="uploadbtndiv">
+                    <label for="myfile">File :</label>
+                    <input v-on:change="changeFile" type="file" accept='image/*' name="myfile" />
+                    <button v-on:click="uploadFile" class="btn">Upload</button>
+                </div><!--upload button div-->
+            </div><!--form-->
+        </div><!--upload form-->
+        <div class="imagedisplay">
+            <h1>Recent Images</h2>
+                <div  class="imagesContainer" v-if="images.length > 0">
+                    <div class="imagediv" v-for="image in images">
+                        <a class="imagelink" :href="'#' + image.id">
+                            <img v-bind:src='image.url' alt="image"/>
+                            <p class="imgtxt">{{image.title}}</p>
+                        </a>
+                    </div><!--imagediv-->
+                </div><!--imagesContainer-->
+                <input v-if="hasMore" v-on:click="getMoreImages" type="button" id="loadmore" value="Load More Results">
+        </div><!--image display-->
     </div>
-    <script id="tmpl1" type="text/template">
-    <div id="imagePopUp">
-        <div id="popUp">
-            <img v-bind:src="image.url" @click="close">
-            <p>{{image.title}}</p>
-            <p>{{image.description}}</p>
-            <p>{{image.username}} has uploaded this at {{image.created_at}}</p>
-            <form>
-                <input v-model = "form.comment" type = "text" name = "comment" placeholder = "comment">
-                <input v-model = "form.username" type = "text" name = "username" placeholder = "username">
-                <button v-on:click="addComments"> Submit </button>
-            </form>
-            <div class="commentBox">
-                    <div v-if="comments.length > 0" v-for="comm in comments" >
-                        <p>{{comm.comment}}</p>
-                        <p>{{comm.username}}</p>
-                        <p>Tag: {{comm.tag}}</p>
-                    </div>
-            </div>
-        </div>
-
-        <button v-on:click="close">X</button>
-    </div>
-
+    <!-- /*somecomponent using the scripit with id "tmpl" below, and using dynamic component u need bind it as usual. and component only want */ -->
+    <script id="template1" type="text/template">
+        <div class="modal-wrapper" v-on:click="emitClose">
+            <div class="image-modal" v-on:click.stop>
+                <div class="imageCommentdiv">
+                    <div class="imageonmodal">
+                        <img :src='image.url' alt="imageclicked">
+                        <p>{{image.title}}</p>
+                        <p>{{image.description}}</p>
+                        <p>{{image.timestamp}}</p>
+                    </div><!--imageonmodal-->
+                    <div  class="commentsform">
+                        <label for="comment">Add a Comment :</label>
+                        <input class="commentinput" v-model='form.comment' type="text" name="comment" placeholder="comments" required>
+                        <label class="commentusr" for="username">User Name :
+                        <input v-model='form.username' type="text" name="username" placeholder="user name" required></label>
+                        <button v-on:click="submitComment" class="btn">Submit</button>
+                    </div><!--commentsform-->
+                </div><!--imageCommentdiv-->
+                <div  class="commentsContainer" v-if="comments.length > 0">
+                    <h1>Comments:</h1>
+                    <div class="commentdiv" v-for="comment in comments">
+                        <p class="commenttxt">{{comment.comment}}</p>
+                        <p class="commentuser">{{comment.username}} on {{comment.created_at}}</p>
+                    </div><!--commentdiv-->
+                </div><!--commentsContainer-->
+            </div><!--imagemodal-->
+        </div><!--modelwrapper-->
     </script>
     <!-- <script id="tmpl2" type="text/template">
         <div style="margin-left:30px" @click="click">

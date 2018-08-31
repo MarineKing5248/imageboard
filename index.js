@@ -2,21 +2,23 @@ const express = require("express");
 const app = express();
 const ca = require("chalk-animation");
 const db = require("./db.js");
-const multer = require("multer");
-const uidSafe = require("uid-safe");
-const path = require("path");
 const bp = require("body-parser");
+app.use(bp.json());
 app.use(
     bp.urlencoded({
         extended: false
     })
 );
-app.use(bp.json());
+
 // used in POST reqs
 const s3 = require("./s3");
 const config = require("./config");
 app.use(express.static("./public"));
 
+/*                   File Upload header Declarations                   */
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
 const diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, __dirname + "/uploads");
@@ -35,10 +37,10 @@ const uploader = multer({
     }
 });
 
-app.get("/images", (req, res) => {
+app.get("/getImages", (req, res) => {
     db.getImages()
-        .then(result => {
-            res.json(result.rows);
+        .then(results => {
+            res.json({ images: results.rows });
         })
         .catch(err => console.log(err));
 });
@@ -55,18 +57,27 @@ app.get("/images", (req, res) => {
 // });
 // get big Image data after click on the small photo icon
 app.get("/getImage/:id", (req, res) => {
-    db.getCurrentImage(req.params.id)
-        .then(result => {
-            var imgInfo = result.rows;
-            db.selectComments(req.params.id).then(result => {
-                // console.log("Second Results", result.rows);
-                var totalInfo = imgInfo.concat(result.rows);
-                // console.log("All Results: ", totalInfo);
-                res.json(totalInfo);
-            });
-            // console.log("hello", result.rows);
+    db.getImage(req.params.id)
+        .then(results => {
+            res.json({ image: results.rows });
         })
-        .catch(err => console.log(err));
+        .catch(function(err) {
+            console.log("error in getting the image based on id!", err);
+            res.json({
+                image: {}
+            });
+        });
+});
+
+app.get("/getComments/:id", (req, res) => {
+    let imageId = req.params.id;
+    db.getComments(imageId)
+        .then(function(results) {
+            res.json({ comments: results.rows });
+        })
+        .catch(function(err) {
+            console.log("error in getting images !", err);
+        });
 });
 
 app.get("/getMoreImages/:id", (req, res) => {
@@ -84,10 +95,10 @@ app.get("/getMoreImages/:id", (req, res) => {
 app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
     // console.log("POST upload!", req.body);
     // If nothing went wrong the file is already in the uploads directory
-    db.saveFile(
+    db.upLoad(
         config.s3Url + req.file.filename,
         req.body.title,
-        req.body.desc,
+        req.body.description,
         req.body.username
     )
         .then(({ rows }) => {
@@ -103,15 +114,16 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
 });
 
 //upload comments to the picture
-app.post("/getImage/:id", (req, res) => {
-    // console.log("Our request: ", req);
-    console.log("Our Body: ", req.body.comment);
-    db.insertComments(req.params.image_id, req.body.comment, req.body.username)
+app.post("/submitComment/:id", (req, res) => {
+    let imageId = req.params.id;
+    db.writeComments(imageId, req.body.comment, req.body.username)
         .then(results => {
-            res.json(results.rows);
+            res.json({
+                comment: results.rows
+            });
         })
         .catch(err => {
-            console.log("Error in writeFileTo: ", err);
+            console.log("error from submit comments", err);
             res.status(500).json({
                 success: false
             });
