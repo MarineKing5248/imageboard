@@ -6,6 +6,7 @@
 </head>
 <body>
     <div id="main">
+        <big-photo v-if='show' :id='currentId' v-on:close='close'></big-photo>
         <h1>{{heading}}</h1>
         <form>
             <input v-model='form.title' type='text' name='title' placeholder='title'>
@@ -16,21 +17,24 @@
             <button v-on:click ='uploadFile' class='upload'>Upload</button>
         </form>
         <div v-if="images.length > 0" class="ul">
-            <div v-on:click="getCurrentId(image.id)" v-for="image in images">
-                <img :src="image.url"  class="images">
-                <p class="">{{image.title}}</p>
+            <div v-for="image in images">
+                <a class="imagelink" :href="'#' + image.id">
+                <img v-bind:src='image.url' alt="image"/>
+                </a>
+                <p class="imgtxt">{{image.title}}</p>
              </div>
         </div>
+        <input v-if="hasMore" v-on:click="getMoreImages" type="button" id="loadmore" value="Load More Results">
             <!-- /*somecomponent using the scripit with id "tmpl" below, and using dynamic component u need bind it as usual. and component only want */ -->
-        <big-photo v-if='show' :id='currentId' v-on:close='close'></big-photo>
+
     </div>
     <script id="tmpl1" type="text/template">
     <div id="imagePopUp">
         <div id="popUp">
-            <img v-bind:src="info.url" @click="close">
-            <p>{{info.title}}</p>
-            <p>{{info.description}}</p>
-            <p>{{info.username}} has uploaded this at {{info.created_at}}</p>
+            <img v-bind:src="image.url" @click="close">
+            <p>{{image.title}}</p>
+            <p>{{image.description}}</p>
+            <p>{{image.username}} has uploaded this at {{image.created_at}}</p>
             <form>
                 <input v-model = "form.comment" type = "text" name = "comment" placeholder = "comment">
                 <input v-model = "form.username" type = "text" name = "username" placeholder = "username">

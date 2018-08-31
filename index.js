@@ -17,40 +17,6 @@ const s3 = require("./s3");
 const config = require("./config");
 app.use(express.static("./public"));
 
-app.get("/images", (req, res) => {
-    db.getImages()
-        .then(result => {
-            res.json(result.rows);
-        })
-        .catch(err => console.log(err));
-});
-//get pictures with specific tag
-app.get("/images/:tag", function(req, res) {
-    let tag = req.params.tag;
-    db.selectTagImages(tag)
-        .then(result => {
-            res.json(result.rows);
-        })
-        .catch(function(err) {
-            console.log("Error occured in gettting pictures with tags:", err);
-        });
-});
-// get big Image data after click on the small photo icon
-app.get("/big-photo/:id", (req, res) => {
-    db.getCurrentImage(req.params.id)
-        .then(result => {
-            var imgInfo = result.rows;
-            db.selectComments(req.params.id).then(result => {
-                // console.log("Second Results", result.rows);
-                var totalInfo = imgInfo.concat(result.rows);
-                // console.log("All Results: ", totalInfo);
-                res.json(totalInfo);
-            });
-            // console.log("hello", result.rows);
-        })
-        .catch(err => console.log(err));
-});
-
 const diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, __dirname + "/uploads");
@@ -68,6 +34,52 @@ const uploader = multer({
         fileSize: 2097152
     }
 });
+
+app.get("/images", (req, res) => {
+    db.getImages()
+        .then(result => {
+            res.json(result.rows);
+        })
+        .catch(err => console.log(err));
+});
+//get pictures with specific tag
+// app.get("/images/:tag", function(req, res) {
+//     let tag = req.params.tag;
+//     db.selectTagImages(tag)
+//         .then(result => {
+//             res.json(result.rows);
+//         })
+//         .catch(function(err) {
+//             console.log("Error occured in gettting pictures with tags:", err);
+//         });
+// });
+// get big Image data after click on the small photo icon
+app.get("/getImage/:id", (req, res) => {
+    db.getCurrentImage(req.params.id)
+        .then(result => {
+            var imgInfo = result.rows;
+            db.selectComments(req.params.id).then(result => {
+                // console.log("Second Results", result.rows);
+                var totalInfo = imgInfo.concat(result.rows);
+                // console.log("All Results: ", totalInfo);
+                res.json(totalInfo);
+            });
+            // console.log("hello", result.rows);
+        })
+        .catch(err => console.log(err));
+});
+
+app.get("/getMoreImages/:id", (req, res) => {
+    let lastimageid = req.params.id;
+    db.getMoreImages(lastimageid)
+        .then(function(results) {
+            res.json({ moreimages: results.rows });
+        })
+        .catch(function(err) {
+            console.log("error in getting mores image based on lastid!", err);
+        });
+});
+
 //upload new picture
 app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
     // console.log("POST upload!", req.body);
@@ -89,8 +101,9 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
             });
         });
 });
+
 //upload comments to the picture
-app.post("/big-photo/:id", (req, res) => {
+app.post("/getImage/:id", (req, res) => {
     // console.log("Our request: ", req);
     console.log("Our Body: ", req.body.comment);
     db.insertComments(req.params.image_id, req.body.comment, req.body.username)
