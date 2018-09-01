@@ -1,10 +1,124 @@
 * {
-  background: rgba(42, 100, 142);
+  box-sizing: border-box;
 }
 
-h1 {
-  left: 300px;
+body {
+  background: url(background1.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  min-height: 100vh;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  margin: 0;
 }
+
+.upload {
+  height: 50px;
+  padding: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  position: relative;
+  max-width: 1600px;
+  margin: 0 auto;
+  background: 0 0;
+}
+
+.modal-wrapper {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  position: fixed;
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  z-index: 20000;
+  opacity: 1;
+  background: rgba(43, 44, 68, 0.67);
+  transition: all 150ms ease 0s;
+}
+.image-modal {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+  border: 3px solid black;
+  top: 10%;
+  left: 5%;
+  bottom: 5%;
+  right: 5%;
+  width: 90%;
+  height: 80%;
+  position: fixed;
+  background: url(background2.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: grey;
+  background-blend-mode: screen;
+}
+.commentsContainer {
+  overflow: auto;
+}
+
+h2 {
+  text-align: center;
+}
+/* 透视特效 */
+.rw-words {
+  -webkit-perspective: 800px;
+  -moz-perspective: 800px;
+  -o-perspective: 800px;
+  -ms-perspactive: 800px;
+  perspactive: 800px;
+}
+
+.rw-words span {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.rw-words-1 span {
+  -webkit-animation: rotateWordsFirst 10s linear infinite 0s;
+  -o-animation: rotateWordsFirst 10s linear infinite 0s;
+  -moz-animation: rotateWordsFirst 10s linear infinite 0s;
+  -ms-animation: rotateWordsFirst 10s linear infinite 0s;
+  animation: rotateWordsFirst 10s linear infinite 0s;
+}
+.rw-words-2 span {
+  -webkit-animation: rotateWordsFirst 10s ease-in infinite 0s;
+  -o-animation: rotateWordsFirst 10s ease-in infinite 0s;
+  -moz-animation: rotateWordsFirst 10s ease-in infinite 0s;
+  -ms-animation: rotateWordsFirst 10s ease-in infinite 0s;
+  animation: rotateWordsFirst 10s ease-in infinite 0s;
+}
+@-webkit-keyframes rotateWordsFirst/second {
+  0% {
+    opacity: 0;
+    -webkit-animation-timing-function: ease-in;
+    width: 0px;
+  }
+
+  5% {
+    opacity: 1;
+    -webkit-animation-timing-function: ease-out;
+    width: 100%;
+  }
+
+  17% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 .ul {
   display: inline-flex;
   flex-wrap: wrap;
@@ -20,51 +134,52 @@ h1 {
 }
 
 img {
-  height: 300px;
   width: 300px;
+  height: 300px;
+  object-fit: cover;
 }
 
 p {
   font-family: monospace;
   font-size: 20px;
 }
-
-#popUp {
-  position: fixed;
-  height: 500px;
-  width: 500px;
-  top: 0px;
-
-  left: 0px;
-}
-#popUp img {
-  z-index: 10;
-  height: 300px;
-  width: 300px;
+.uploadform {
+  text-align: center;
 }
 
-/* #modal {
-  position: fixed;
-  top: 40px;
-  right: 40px;
-  left: 40px;
-  bottom: 40px;
-  background-color: rgba(211, 211, 211);
-} */
-
-/* .photoBig {
-  height: 300px;
-  width: 400px;
-} */
-/* .spinne {
-  height: 100px;
-  width: 100%;
-  background-color: rgb(130, 160, 180);
-  z-index: 200;
-  visibility: hidden;
+.form {
+  display: block;
 }
-.spinne img {
-  height: 100px;
-  position: absolute;
-  left: 44%;
-} */
+
+.form input:required {
+  border-left-color: red;
+}
+.uploadbtndiv {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.btn {
+  border: 2px solid #c70039;
+  color: #eb9586;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  margin-left: 45%;
+  margin-top: 10px;
+}
+
+.uploadbtndiv input[type="file"] {
+  left: 20px;
+  margin-top: 10px;
+  line-height: 2;
+  padding: 10px;
+}
+
+.form input[type="text"] {
+  padding: 0.5rem;
+}
