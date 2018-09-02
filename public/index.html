@@ -1,27 +1,24 @@
 <!doctype html>
 <html>
 <head>
-    <title>Illusion</title>
+    <title>ImageBoard</title>
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
     <section class="rw-wrapper">
-        <span class="span-title">Illusion</span>
-        <h2 class="rw-sentence">
+        <h1 class="rw-sentence">
             <div class="rw-words rw-words-1">
-                <span>All you see are Illusions</span>
+                <span>Welcome to my ImageBoard</span>
             </div>
-            <div class=content1</span>
-            </div>
-        </h2>
+        </h1>
     </section>
     <div id="main">
         <big-photo v-if='currentImageId' :id='currentImageId' v-on:close='hideModal'></big-photo>
 
-        <div class="uploadform">
-            <h1>Add an Image:</h2>
+        <div class="upload">
             <!--we dont have to use a form tag-->
             <div class="form">
+                <h1>Upload your Image:</h1>
                 <label for="title">Title :</label>
                 <input v-model='form.title' type="text" name="title" placeholder="image title" required/>
                 <label for="description">Description :</label>
@@ -35,18 +32,19 @@
                 </div><!--upload button div-->
             </div><!--form-->
         </div><!--upload form-->
-        <div class="imagedisplay">
-            <h1>Recent Images</h2>
-                <div  class="imagesContainer" v-if="images.length > 0">
-                    <div class="imagediv" v-for="image in images">
-                        <a class="imagelink" :href="'#' + image.id">
-                            <img v-bind:src='image.url' alt="image"/>
-                            <p class="imgtxt">{{image.title}}</p>
-                        </a>
-                    </div><!--imagediv-->
+        <div id="board">
+        <div class="imageDisplay">
+            <h2>Images with Tag:</h2>
+                <div class="imagesContainer" v-if="images.length > 0" v-for="image in images">
+                    <a class="imagelink" :href="'#' + image.id">
+                        <img v-bind:src='image.url' alt="image"/>
+                        <p class="imgtxt">{{image.title}}</p>
+                    </a>
                 </div><!--imagesContainer-->
-                <input v-if="hasMore" v-on:click="getMoreImages" type="button" id="loadmore" value="Load More Results">
         </div><!--image display-->
+
+        </div>
+        <!-- <div class="spinne"><img src="spinne.gif"></div> -->
     </div>
     <!-- /*somecomponent using the scripit with id "tmpl" below, and using dynamic component u need bind it as usual. and component only want */ -->
     <script id="template1" type="text/template">

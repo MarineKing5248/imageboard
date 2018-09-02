@@ -66,6 +66,7 @@
             axios.get("/getImages").then(function(res) {
                 app.images = res.data.images;
                 app.lastImageId = app.images[app.images.length - 1].id;
+                setTimeout(app.infiniteScroll, 2000);
             });
         }, //client side 'get' and 'render',user cant see anything changed,the url stay the same, it runs when the page loads or refreshes
         methods: {
@@ -82,6 +83,22 @@
                     app.images.unshift(res.data.image);
                 });
             }, //close upload file
+            infiniteScroll: function() {
+                var app = this;
+                var docHeight = document.body.clientHeight - 200;
+                var windowHeight = window.innerHeight;
+                var offSetY = pageYOffset;
+                var height = windowHeight + offSetY;
+                // console.log("Document Height: ", docHeight);
+                // console.log("Window Height: ", windowHeight);
+                // console.log("offset Y: ", offSetY);
+                if (height > docHeight) {
+                    // $(".spinne").css({ visibility: "visible" });
+                    setTimeout(this.getMoreImages(), 2000);
+                } else {
+                    setTimeout(app.infiniteScroll, 2000);
+                }
+            },
             hideModal: function() {
                 this.currentImageId = null;
                 location.hash = "";
@@ -91,6 +108,7 @@
                 axios.get("/getMoreImages/" + this.lastImageId).then(function(res) {
                     app.hasMore = !!res.data.moreimages.length;
                     app.images = app.images.concat(res.data.moreimages);
+                    // $(".spinne").css({ visibility: "visible" });
                 });
             },
             getImageId: function(id) {

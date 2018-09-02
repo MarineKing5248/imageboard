@@ -12,17 +12,103 @@ body {
   min-height: 100vh;
   font-family: "Comic Sans MS", "Comic Sans", cursive;
   margin: 0;
+  width: 100%;
 }
 
-.upload {
-  height: 50px;
+.form {
+  height: 200px;
   padding: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  position: relative;
-  max-width: 1600px;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
   margin: 0 auto;
-  background: 0 0;
+  background-color: rgb(225, 230, 241, 0.7);
+  z-index: 2000;
+  text-align: center;
+}
+
+#board {
+  width: 94%;
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  align-items: center;
+}
+
+.uploadbtndiv {
+  overflow: hidden;
+  display: block;
+}
+
+.ul {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.imagesContainer:hover {
+  border-color: yellow;
+}
+
+img {
+  width: 300px;
+  height: 300px;
+}
+.imageDisplay {
+  align-items: center;
+  justify-content: stretch;
+  /* display: flex;
+  flex-direction: row; */
+  width: 100%;
+  display: inline;
+}
+.imagesContainer {
+  height: 340px;
+  width: 304px;
+  border: 2px solid black;
+  text-align: center;
+  margin: 10px;
+  float: left;
+}
+
+.imgtxt {
+  font-size: 14px;
+  color: rgb(17, 112, 154);
+  line-height: 0px;
+}
+
+p {
+  font-family: monospace;
+  font-size: 20px;
+}
+.uploadform {
+  text-align: center;
+}
+
+.form {
+  display: block;
+}
+
+.form input:required {
+  border-left-color: red;
+}
+
+.btn {
+  border: 2px solid rgba(#283eb3, 0.81);
+  color: #91d0c5;
+  background-color: grey;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.uploadbtndiv input[type="file"] {
+  margin-top: 10px;
+  line-height: 2;
+  padding: 10px;
+}
+
+.form input[type="text"] {
+  padding: 0.5rem;
 }
 
 .modal-wrapper {
@@ -50,7 +136,7 @@ body {
   width: 90%;
   height: 80%;
   position: fixed;
-  background: url(background2.jpg) no-repeat center center fixed;
+  background: url(background1.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -62,124 +148,19 @@ body {
   overflow: auto;
 }
 
-h2 {
-  text-align: center;
-}
-/* 透视特效 */
-.rw-words {
-  -webkit-perspective: 800px;
-  -moz-perspective: 800px;
-  -o-perspective: 800px;
-  -ms-perspactive: 800px;
-  perspactive: 800px;
-}
-
-.rw-words span {
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.rw-words-1 span {
-  -webkit-animation: rotateWordsFirst 10s linear infinite 0s;
-  -o-animation: rotateWordsFirst 10s linear infinite 0s;
-  -moz-animation: rotateWordsFirst 10s linear infinite 0s;
-  -ms-animation: rotateWordsFirst 10s linear infinite 0s;
-  animation: rotateWordsFirst 10s linear infinite 0s;
-}
-.rw-words-2 span {
-  -webkit-animation: rotateWordsFirst 10s ease-in infinite 0s;
-  -o-animation: rotateWordsFirst 10s ease-in infinite 0s;
-  -moz-animation: rotateWordsFirst 10s ease-in infinite 0s;
-  -ms-animation: rotateWordsFirst 10s ease-in infinite 0s;
-  animation: rotateWordsFirst 10s ease-in infinite 0s;
-}
-@-webkit-keyframes rotateWordsFirst/second {
-  0% {
-    opacity: 0;
-    -webkit-animation-timing-function: ease-in;
-    width: 0px;
-  }
-
-  5% {
-    opacity: 1;
-    -webkit-animation-timing-function: ease-out;
-    width: 100%;
-  }
-
-  17% {
-    opacity: 1;
-  }
-
-  20% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-.ul {
-  display: inline-flex;
-  flex-wrap: wrap;
-}
-.photo {
-  border: solid 3px rgb(131, 171, 213);
-  height: 300px;
-  width: 300px;
-  margin: 10px;
-}
-.photo:hover {
-  border-color: yellow;
-}
-
-img {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-}
-
-p {
-  font-family: monospace;
-  font-size: 20px;
-}
-.uploadform {
-  text-align: center;
-}
-
-.form {
-  display: block;
-}
-
-.form input:required {
-  border-left-color: red;
-}
-.uploadbtndiv {
-  position: relative;
-  overflow: hidden;
-  display: block;
-}
-
-.btn {
-  border: 2px solid #c70039;
-  color: #eb9586;
+.spinne {
+  align-items: center;
+  height: 100px;
+  width: 100%;
   background-color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-  display: block;
-  margin-left: 45%;
-  margin-top: 10px;
+  z-index: 99999;
+  visibility: hidden;
+}
+.spinne img {
+  height: 100px;
+  position: absolute;
 }
 
-.uploadbtndiv input[type="file"] {
-  left: 20px;
-  margin-top: 10px;
-  line-height: 2;
-  padding: 10px;
-}
-
-.form input[type="text"] {
-  padding: 0.5rem;
+h1 {
+  text-align: center;
 }
