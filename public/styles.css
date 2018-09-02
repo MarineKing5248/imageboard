@@ -15,6 +15,10 @@ body {
   width: 100%;
 }
 
+h1 {
+  text-align: center;
+}
+
 .form {
   height: 200px;
   padding: 0;
@@ -62,7 +66,7 @@ img {
   display: inline;
 }
 .imagesContainer {
-  height: 340px;
+  height: 360px;
   width: 304px;
   border: 2px solid black;
   text-align: center;
@@ -71,9 +75,9 @@ img {
 }
 
 .imgtxt {
-  font-size: 14px;
+  font-size: 12px;
   color: rgb(17, 112, 154);
-  line-height: 0px;
+  word-wrap: break-word;
 }
 
 p {
@@ -122,14 +126,13 @@ p {
   z-index: 20000;
   opacity: 1;
   background: rgba(43, 44, 68, 0.67);
-  transition: all 150ms ease 0s;
 }
 .image-modal {
   display: flex;
   justify-content: space-around;
   padding-top: 20px;
   border: 3px solid black;
-  top: 10%;
+  top: 5%;
   left: 5%;
   bottom: 5%;
   right: 5%;
@@ -144,6 +147,12 @@ p {
   background-color: grey;
   background-blend-mode: screen;
 }
+
+.bigOne {
+  height: 400px;
+  width: 400px;
+}
+
 .commentsContainer {
   overflow: auto;
 }
@@ -159,8 +168,4 @@ p {
 .spinne img {
   height: 100px;
   position: absolute;
-}
-
-h1 {
-  text-align: center;
 }

@@ -41,20 +41,21 @@ app.get("/getImages", (req, res) => {
     db.getImages()
         .then(results => {
             res.json({ images: results.rows });
+            console.log(results.rows);
         })
         .catch(err => console.log(err));
 });
 //get pictures with specific tag
-// app.get("/images/:tag", function(req, res) {
-//     let tag = req.params.tag;
-//     db.selectTagImages(tag)
-//         .then(result => {
-//             res.json(result.rows);
-//         })
-//         .catch(function(err) {
-//             console.log("Error occured in gettting pictures with tags:", err);
-//         });
-// });
+app.get("/images/:tag", function(req, res) {
+    let tag = req.params.tag;
+    db.selectTagImages(tag)
+        .then(results => {
+            res.json({ images: results.rows });
+        })
+        .catch(function(err) {
+            console.log("Error occured in gettting pictures with tags:", err);
+        });
+});
 // get big Image data after click on the small photo icon
 app.get("/getImage/:id", (req, res) => {
     db.getImage(req.params.id)
@@ -99,7 +100,8 @@ app.post("/upload", uploader.single("file"), s3.upload, function(req, res) {
         config.s3Url + req.file.filename,
         req.body.title,
         req.body.description,
-        req.body.username
+        req.body.username,
+        req.body.tag
     )
         .then(({ rows }) => {
             res.json({

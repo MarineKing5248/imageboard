@@ -6,6 +6,7 @@ CREATE TABLE images(
     username VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
+    tag VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 DROP TABLE IF EXISTS comments;
@@ -17,25 +18,28 @@ CREATE TABLE comments(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO images (url, username, title, description) VALUES (
+INSERT INTO images (url, username, title, description, tag) VALUES (
     'https://s3.amazonaws.com/spicedling/MQwozP4QM5uK84XgPs4Q0oUIVWiwzN-w.jpg',
     'funkychicken',
     'Welcome to Berlin and the future!',
-    'This photo brings back so many great memories.'
+    'This photo brings back so many great memories.',
+    'berlin'
 );
 
-INSERT INTO images (url, username, title, description) VALUES (
+INSERT INTO images (url, username, title, description,  tag) VALUES (
     'https://s3.amazonaws.com/spicedling/wg8d94G_HrWdq7bU_2wT6Y6F3zrX-kej.jpg',
     'discoduck',
     'Elvis',
-    'We can''t go on together with suspicious minds.'
+    'We can''t go on together with suspicious minds.',
+    'music'
 );
 
-INSERT INTO images (url, username, title, description) VALUES (
+INSERT INTO images (url, username, title, description,  tag) VALUES (
     'https://s3.amazonaws.com/spicedling/XCv4AwJdm6QuzjenFPKJocpipRNNMwze.jpg',
     'discoduck',
     'Hello Berlin',
-    'This is going to be worth a lot of money one day.'
+    'This is going to be worth a lot of money one day.',
+    'toy'
 );
 
 -- SELECT * FROM images

@@ -25,6 +25,8 @@
                 <input v-model='form.description' type="text" name="description" placeholder="image description" required/>
                 <label for="username">User Name :</label>
                 <input v-model='form.username' type="text" name="username" placeholder="user name" required/>
+                <label for="tag">Tag :</label>
+                <input v-model='form.tag' type="text" name="tag" placeholder="tag" required/>
                 <div class="uploadbtndiv">
                     <label for="myfile">File :</label>
                     <input v-on:change="changeFile" type="file" accept='image/*' name="myfile" />
@@ -33,16 +35,15 @@
             </div><!--form-->
         </div><!--upload form-->
         <div id="board">
-        <div class="imageDisplay">
-            <h2>Images with Tag:</h2>
+            <div class="imageDisplay">
+                <h2>Recent Images:</h2>
                 <div class="imagesContainer" v-if="images.length > 0" v-for="image in images">
                     <a class="imagelink" :href="'#' + image.id">
                         <img v-bind:src='image.url' alt="image"/>
-                        <p class="imgtxt">{{image.title}}</p>
+                        <p class="imgtxt">"{{image.title}}" by {{image.username}} </p>
                     </a>
                 </div><!--imagesContainer-->
-        </div><!--image display-->
-
+            </div><!--image display-->
         </div>
         <!-- <div class="spinne"><img src="spinne.gif"></div> -->
     </div>
@@ -52,7 +53,7 @@
             <div class="image-modal" v-on:click.stop>
                 <div class="imageCommentdiv">
                     <div class="imageonmodal">
-                        <img :src='image.url' alt="imageclicked">
+                        <img :src='image.url' alt="imageToSee" class="bigOne">
                         <p>{{image.title}}</p>
                         <p>{{image.description}}</p>
                         <p>{{image.timestamp}}</p>
@@ -84,5 +85,6 @@
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
+    <!-- <script src="/js/randomFormat.js"></script> -->
 </body>
 </html>
