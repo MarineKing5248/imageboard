@@ -14,7 +14,18 @@
     </section>
     <div id="main">
         <big-photo v-if='currentImageId' :id='currentImageId' v-on:close='hideModal'></big-photo>
-
+        <header>
+            <h2>Show Recent Images:
+                <!-- <label>with Tag:<label>
+                <select class = "tags-to-select">
+                <option>berlin</option>
+                <option>music</option>
+                <option>toy</option>
+                <option>Japan</option>
+                <option>country</option>
+                </select> -->
+            </h2>
+        </header>
         <div class="upload">
             <!--we dont have to use a form tag-->
             <div class="form">
@@ -34,9 +45,10 @@
                 </div><!--upload button div-->
             </div><!--form-->
         </div><!--upload form-->
+
         <div id="board">
+
             <div class="imageDisplay">
-                <h2>Recent Images:</h2>
                 <div class="imagesContainer" v-if="images.length > 0" v-for="image in images">
                     <a class="imagelink" :href="'#' + image.id">
                         <img v-bind:src='image.url' alt="image"/>
@@ -54,20 +66,18 @@
                 <div class="imageCommentdiv">
                     <div class="imageonmodal">
                         <img :src='image.url' alt="imageToSee" class="bigOne">
-                        <p>{{image.title}}</p>
-                        <p>{{image.description}}</p>
-                        <p>{{image.timestamp}}</p>
+                        <p>{{image.title}} {{image.description}} {{image.timestamp}}</p>
                     </div><!--imageonmodal-->
                     <div  class="commentsform">
-                        <label for="comment">Add a Comment :</label>
+                        <label for="comment">Comment Here:</label>
                         <input class="commentinput" v-model='form.comment' type="text" name="comment" placeholder="comments" required>
                         <label class="commentusr" for="username">User Name :
                         <input v-model='form.username' type="text" name="username" placeholder="user name" required></label>
                         <button v-on:click="submitComment" class="btn">Submit</button>
                     </div><!--commentsform-->
                 </div><!--imageCommentdiv-->
-                <div  class="commentsContainer" v-if="comments.length > 0">
-                    <h1>Comments:</h1>
+                <div class="commentsContainer" v-if="comments.length > 0">
+                    <h2>Comments:</h2>
                     <div class="commentdiv" v-for="comment in comments">
                         <p class="commenttxt">{{comment.comment}}</p>
                         <p class="commentuser">{{comment.username}} on {{comment.created_at}}</p>

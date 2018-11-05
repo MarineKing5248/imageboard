@@ -83,6 +83,12 @@
                     app.images.unshift(res.data.image);
                 });
             }, //close upload file
+            hide: function() {
+                $(".upload").css({ visibility: "hide" });
+            },
+            show: function() {
+                $(".upload").css({ visibility: "visible" });
+            },
             infiniteScroll: function() {
                 var app = this;
                 var docHeight = document.body.clientHeight - 200;

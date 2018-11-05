@@ -1,7 +1,20 @@
 * {
   box-sizing: border-box;
 }
+header {
+  height: 60px;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 2000;
+  text-align: center;
+}
 
+option {
+  border: 2px solid rgba(#283eb3, 0.81);
+  color: #91d0c5;
+  background-color: grey;
+  font-weight: bold;
+}
 body {
   background: url(background1.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -38,7 +51,9 @@ h1 {
   left: 50%;
   align-items: center;
 }
-
+.upload {
+  visibility: visible;
+}
 .uploadbtndiv {
   overflow: hidden;
   display: block;
@@ -123,6 +138,7 @@ p {
   text-align: center;
   position: fixed;
   font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 14px;
   z-index: 20000;
   opacity: 1;
   background: rgba(43, 44, 68, 0.67);
@@ -153,8 +169,13 @@ p {
   width: 400px;
 }
 
-.commentsContainer {
+.commentsContainer .commentdiv {
+  font-size: 14px;
   overflow: auto;
+}
+
+.commentinput {
+  width: 200px;
 }
 
 .spinne {

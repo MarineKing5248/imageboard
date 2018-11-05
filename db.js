@@ -16,7 +16,7 @@ module.exports.getMoreImages = function(id) {
     FROM images
     WHERE id<$1
     ORDER BY id DESC
-    LIMIT 12`;
+    LIMIT 8`;
     return db.query(query, [+id]);
 };
 
@@ -58,6 +58,6 @@ module.exports.selectTagImages = function(tag) {
     FROM images
     WHERE tag=$1
     ORDER BY id DESC
-    LIMIT 12`;
+    LIMIT 8`;
     return db.query(query, [+tag]);
 };
